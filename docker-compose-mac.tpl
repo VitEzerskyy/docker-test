@@ -22,7 +22,7 @@ services:
     expose:
        - "80"
     volumes:
-       - ../../pushilka-app:/var/www/pushilka:cached
+       - ../pushilka-app:/var/www/pushilka:cached
 
   pushilka-redis:
     image: redis:3.2
@@ -42,7 +42,7 @@ services:
     expose:
        - "5432"
     volumes:
-       - ../../pushilka-pgdata:/pgdata
+       - ../pushilka-pgdata:/pgdata
 
     networks:
        - pushilka_net
