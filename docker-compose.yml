@@ -9,8 +9,8 @@ services:
        - NGINX_DIR_INDEX=index.php
        - NGINX_HOST_ADMIN=pushilka.local
        - NGINX_ROOT=/var/www/pushilka/public
-       - UID_VAR={{ UID_VALUE }}
-       - GID_VAR={{ GID_VALUE }}
+       - UID_VAR=501
+       - GID_VAR=20
     networks:
        - pushilka_net
     working_dir: /var/www/pushilka
