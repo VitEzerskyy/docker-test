@@ -1,0 +1,55 @@
+version: '2'
+services:
+
+  test-app:
+    restart: always
+    image: richarvey/nginx-php-fpm
+    container_name: test-app
+    environment:
+       - WEBROOT=/var/www/test/public
+       - PUID={{ UID_VALUE }}
+       - PGID={{ GID_VALUE }}
+    networks:
+       - test_net
+    working_dir: /var/www/test
+    ports:
+       - "127.0.0.1:80:80"
+    links:
+       - db
+    expose:
+       - "80"
+    volumes:
+       - ../test-app:/var/www/test:cached
+
+  db:
+    image: postgres:latest
+    container_name: test-db
+    environment:
+      PGDATA: /pgdata
+      POSTGRES_DB: test
+      POSTGRES_USER: test_usr
+      POSTGRES_PASSWORD: 123qwe
+    ports:
+       - "5432:5432"
+    expose:
+       - "5432"
+    volumes:
+       - ../test-pgdata:/pgdata
+
+    networks:
+       - test_net
+
+  adminer:
+    container_name: test-dbadminer
+    image: adminer
+    links:
+       - db
+    networks:
+       - test_net
+    ports:
+       - "8080:8080"
+
+networks:
+  test_net:
+    driver: bridge
+
